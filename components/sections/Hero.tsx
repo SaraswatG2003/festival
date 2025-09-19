@@ -16,26 +16,6 @@ export default function Hero() {
       {/* Navigation */}
       <GlassNavbar />
 
-      {/* Top Left Hero Text */}
-      <div className="absolute top-32 left-8 z-30 max-w-md">
-        <div className="glass-card p-6 backdrop-blur-md">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">
-            SONIC
-            <span className="block text-white/80">WAVES</span>
-            <span className="block text-2xl md:text-3xl font-normal text-white/60">2024</span>
-          </h1>
-          <p className="text-white/70 text-lg mb-6">Experience the ultimate music festival in a digital dimension</p>
-          <div className="flex gap-4">
-            <button className="glass-button px-6 py-3 text-white font-semibold hover:scale-105 transition-transform">
-              Get Tickets
-            </button>
-            <button className="glass-card px-6 py-3 text-white/80 hover:text-white transition-colors border border-white/20">
-              Explore
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* Top Right Stats */}
       <div className="absolute top-32 right-8 z-30">
         <div className="glass-card p-4 backdrop-blur-md text-right">
@@ -73,8 +53,10 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative z-20 w-full h-full scale-110">
-        <FestivalPortal />
+      <div className="relative z-20 w-full h-full flex items-center justify-center my-16">
+        <div className="w-full h-[calc(100vh-8rem)] max-h-[800px]">
+          <FestivalPortal />
+        </div>
       </div>
 
       {/* Scroll Indicator */}
