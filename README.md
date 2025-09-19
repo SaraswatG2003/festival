@@ -14,7 +14,7 @@ Any changes you make to your deployed app will be automatically pushed to this r
 
 Your project is live at:
 
-**[https://vercel.com/saraswatg60-4505s-projects/v0-festival-hub-frontend](https://vercel.com/saraswatg60-4505s-projects/v0-festival-hub-frontend)**
+My domain 
 
 ## Build your app
 
@@ -28,3 +28,5 @@ Continue building your app on:
 2. Deploy your chats from the v0 interface
 3. Changes are automatically pushed to this repository
 4. Vercel deploys the latest version from this repository
+
+
