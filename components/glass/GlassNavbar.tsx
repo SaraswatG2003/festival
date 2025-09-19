@@ -5,11 +5,10 @@ import { Menu, X, Music, Calendar, MapPin, Camera, Ticket } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const navItems = [
-  { name: "Artists", href: "#artists", icon: Music },
-  { name: "Schedule", href: "#schedule", icon: Calendar },
-  { name: "Venue", href: "#venue", icon: MapPin },
-  { name: "Gallery", href: "#gallery", icon: Camera },
-  { name: "Tickets", href: "#tickets", icon: Ticket },
+  { name: "Artists", href: "#artists", icon: Music, isExternal: false },
+  { name: "Schedule", href: "#artists", icon: Calendar, isExternal: false },
+  { name: "3D Venue", href: "#experience", icon: MapPin, isExternal: false },
+  { name: "Tickets", href: "#tickets", icon: Ticket, isExternal: false },
 ]
 
 export default function GlassNavbar() {
@@ -24,7 +23,11 @@ export default function GlassNavbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const scrollToSection = (href: string) => {
+  const scrollToSection = (href: string, isExternal?: boolean) => {
+    if (isExternal) {
+      window.location.href = href
+      return
+    }
     const element = document.querySelector(href)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
@@ -42,7 +45,7 @@ export default function GlassNavbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-heading gradient-text">Festival Hub</h1>
+            <h1 className="text-2xl font-heading violet-gradient">Festival Hub</h1>
           </div>
 
           {/* Desktop Navigation */}
@@ -53,7 +56,7 @@ export default function GlassNavbar() {
                 return (
                   <button
                     key={item.name}
-                    onClick={() => scrollToSection(item.href)}
+                    onClick={() => scrollToSection(item.href, item.isExternal)}
                     className="flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200"
                   >
                     <Icon className="w-4 h-4" />
@@ -68,9 +71,14 @@ export default function GlassNavbar() {
           <div className="hidden md:block">
             <Button
               onClick={() => scrollToSection("#tickets")}
-              className="glass-primary hover:glass-secondary neon-blue border-blue-400/30"
+              className="glass-primary hover:glass-secondary neon-blue border border-blue-400/30 hover:border-blue-400/50 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-400/25 relative overflow-hidden group"
             >
-              Get Tickets
+              <span className="relative z-20 flex items-center space-x-2 text-white font-semibold">
+                <Ticket className="w-4 h-4 text-white" />
+                <span className="text-white">Get Tickets</span>
+              </span>
+              {/* Shine effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></div>
             </Button>
           </div>
 
@@ -96,7 +104,7 @@ export default function GlassNavbar() {
                 return (
                   <button
                     key={item.name}
-                    onClick={() => scrollToSection(item.href)}
+                    onClick={() => scrollToSection(item.href, item.isExternal)}
                     className="flex items-center space-x-2 w-full px-3 py-2 rounded-md text-base font-medium text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200"
                   >
                     <Icon className="w-5 h-5" />
@@ -104,8 +112,13 @@ export default function GlassNavbar() {
                   </button>
                 )
               })}
-              <Button onClick={() => scrollToSection("#tickets")} className="w-full mt-4 glass-secondary neon-blue">
-                Get Tickets
+              <Button onClick={() => scrollToSection("#tickets")} className="w-full mt-4 glass-secondary neon-blue hover:scale-105 transition-all duration-300 relative overflow-hidden group">
+                <span className="relative z-20 flex items-center justify-center space-x-2 text-white font-semibold">
+                  <Ticket className="w-4 h-4 text-white" />
+                  <span className="text-white">Get Tickets</span>
+                </span>
+                {/* Shine effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none"></div>
               </Button>
             </div>
           </div>

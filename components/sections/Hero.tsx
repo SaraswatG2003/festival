@@ -1,7 +1,7 @@
 "use client"
 import { ChevronDown } from "lucide-react"
 import GlassNavbar from "@/components/glass/GlassNavbar"
-// import FestivalPortal from "@/components/3d/FestivalPortal"
+import FestivalPortal from "@/components/3d/FestivalPortal"
 
 export default function Hero() {
   const scrollToNext = () => {
@@ -40,30 +40,9 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Bottom Right Interactive Hint */}
-      <div className="absolute bottom-32 right-8 z-30">
-        <div className="glass-card p-4 backdrop-blur-md text-center">
-          <div className="text-white/60 text-sm uppercase tracking-wider mb-2">Portal Control</div>
-          <div className="text-white text-sm mb-2">Click • Drag • Explore</div>
-          <div className="flex justify-center gap-2">
-            <div className="w-2 h-2 bg-white/40 rounded-full animate-pulse"></div>
-            <div className="w-2 h-2 bg-white/40 rounded-full animate-pulse" style={{ animationDelay: "0.5s" }}></div>
-            <div className="w-2 h-2 bg-white/40 rounded-full animate-pulse" style={{ animationDelay: "1s" }}></div>
-          </div>
-        </div>
-      </div>
-
       <div className="relative z-20 w-full h-full flex items-center justify-center my-16">
-        <div className="w-full h-[calc(100vh-8rem)] max-h-[800px] flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-64 h-64 mx-auto mb-8 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-cyan-500 animate-pulse flex items-center justify-center">
-              <div className="text-6xl">🎪</div>
-            </div>
-            <h1 className="text-6xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-4">
-              Aurora Fest
-            </h1>
-            <p className="text-xl text-gray-300">Experience the Magic</p>
-          </div>
+        <div className="w-full h-[calc(100vh-8rem)] max-h-[800px]">
+          <FestivalPortal />
         </div>
       </div>
 

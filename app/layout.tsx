@@ -21,9 +21,13 @@ export const metadata: Metadata = {
     "Experience the ultimate music festival with glassmorphism design, 3D interactive elements, and immersive multimedia experiences.",
   keywords: "music festival, glassmorphism, 3D interactive, music events, festival tickets",
   authors: [{ name: "Festival Hub Team" }],
-  viewport: "width=device-width, initial-scale=1",
-  themeColor: "#00d4ff",
     generator: 'v0.app'
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: "#00d4ff",
 }
 
 export default function RootLayout({

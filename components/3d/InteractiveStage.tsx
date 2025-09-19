@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
-import { OrbitControls, Environment, Text3D, Float, Sparkles, Html, Trail } from "@react-three/drei"
+import { OrbitControls, Environment, Float, Sparkles, Html, Trail } from "@react-three/drei"
 import type { Mesh, Group } from "three"
 import * as THREE from "three"
 
@@ -299,7 +299,7 @@ function InteractiveStageCore() {
       <Sparkles count={150} scale={[15, 10, 15]} size={2} speed={2} color="#FF6B9D" opacity={0.7} />
 
       <Float speed={0.8} rotationIntensity={0.2} floatIntensity={0.5}>
-        <Text3D font="/fonts/Inter_Bold.json" size={1.2} height={0.4} position={[0, -10, 0]}>
+        {/* <Text3D font="/fonts/Inter_Bold.json" size={1.2} height={0.4} position={[0, -10, 0]}>
           INTERACTIVE STAGE
           <meshStandardMaterial
             color="#FFFFFF"
@@ -308,7 +308,7 @@ function InteractiveStageCore() {
             metalness={0.8}
             roughness={0.2}
           />
-        </Text3D>
+        </Text3D> */}
       </Float>
 
       {hovered && (

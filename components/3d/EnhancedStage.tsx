@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
-import { OrbitControls, Environment, Text3D, Float, Sparkles, Html } from "@react-three/drei"
+import { OrbitControls, Environment, Float, Sparkles, Html } from "@react-three/drei"
 import type { Group } from "three"
 import * as THREE from "three"
 
@@ -18,7 +18,7 @@ function CrystalFormation({ position, size, color, growth }: {
     if (crystalRef.current) {
       crystalRef.current.rotation.y += 0.01
       crystalRef.current.scale.y = size * (0.8 + growth * 0.4 + Math.sin(state.clock.elapsedTime * 2) * 0.1)
-      crystalRef.current.material.emissiveIntensity = 0.3 + Math.sin(state.clock.elapsedTime * 3) * 0.2
+      // crystalRef.current.material.emissiveIntensity = 0.3 + Math.sin(state.clock.elapsedTime * 3) * 0.2
     }
   })
 
@@ -227,7 +227,7 @@ function MainStage() {
       />
 
       {/* Nature's Symphony Text */}
-      <Float speed={0.6} rotationIntensity={0.1} floatIntensity={0.3}>
+      {/* <Float speed={0.6} rotationIntensity={0.1} floatIntensity={0.3}>
         <Text3D
           font="/fonts/Inter_Bold.json"
           size={0.6}
@@ -244,7 +244,7 @@ function MainStage() {
             roughness={0.4}
           />
         </Text3D>
-      </Float>
+      </Float> */}
 
       {/* Interactive Garden Info */}
       {hovered && (

@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
-import { OrbitControls, Environment, Text3D, Float, Sparkles } from "@react-three/drei"
+import { OrbitControls, Float, Text3D, Sparkles } from "@react-three/drei"
 import type { Group } from "three"
 import * as THREE from "three"
 
@@ -20,45 +20,54 @@ function MainStage() {
 
   return (
     <group ref={stageRef} position={[0, 0, -15]}>
-      {/* Main Stage Platform */}
+      {/* Main Stage Platform - ENHANCED */}
       <mesh position={[0, -1, 0]}>
-        <boxGeometry args={[12, 0.5, 8]} />
-        <meshStandardMaterial color="#2a2a2a" metalness={0.3} roughness={0.7} />
+        <boxGeometry args={[12, 0.8, 8]} />
+        <meshStandardMaterial 
+          color="#2a2a2a" 
+          metalness={0.5} 
+          roughness={0.4}
+          emissive="#111111"
+          emissiveIntensity={0.2}
+        />
       </mesh>
 
-      {/* Stage Backdrop */}
+      {/* Stage Backdrop - ENHANCED */}
       <mesh position={[0, 3, -4]}>
         <boxGeometry args={[14, 8, 0.5]} />
-        <meshStandardMaterial color="#1a1a1a" />
+        <meshStandardMaterial 
+          color="#1a1a1a"
+          emissive="#333333"
+          emissiveIntensity={0.1}
+        />
       </mesh>
 
-      {/* LED Screen */}
+      {/* LED Screen - ENHANCED */}
       <mesh position={[0, 3, -3.8]}>
         <boxGeometry args={[10, 6, 0.1]} />
-        <meshStandardMaterial color="#001122" />
+        <meshStandardMaterial 
+          color="#001122"
+          emissive={lightShow ? "#0066ff" : "#003366"}
+          emissiveIntensity={lightShow ? 0.8 : 0.3}
+        />
       </mesh>
 
-      {/* Stage Lights */}
-      {[...Array(12)].map((_, i) => (
-        <group key={i} position={[(i - 5.5) * 1.5, 6 + Math.sin(i) * 0.5, -2 + Math.cos(i) * 0.3]}>
+      {/* Stage Lights - SIMPLIFIED to avoid shader errors */}
+      {[...Array(8)].map((_, i) => (
+        <group key={i} position={[(i - 3.5) * 2, 6 + Math.sin(i) * 0.5, -2 + Math.cos(i) * 0.3]}>
           <mesh>
             <cylinderGeometry args={[0.3, 0.4, 1]} />
             <meshStandardMaterial color="#333" metalness={0.8} roughness={0.2} />
           </mesh>
-          <pointLight
-            position={[0, -0.5, 0]}
-            intensity={lightShow ? 2 + Math.sin(i + Date.now() * 0.005) * 0.5 : 1}
-            color={["#ff0066", "#00ff66", "#6600ff", "#ffff00", "#ff6600", "#00ffff"][i % 6]}
-            distance={18}
-          />
+          {/* Light beam effect without point lights */}
           <mesh position={[0, -2, 0]} rotation={[Math.PI / 2, 0, 0]}>
             <coneGeometry args={[2, 4, 8]} />
             <meshStandardMaterial
-              color={["#ff0066", "#00ff66", "#6600ff", "#ffff00", "#ff6600", "#00ffff"][i % 6]}
+              color={["#ff0066", "#00ff66", "#6600ff", "#ffff00", "#ff6600", "#00ffff", "#ff3366", "#66ff33"][i]}
               transparent
-              opacity={lightShow ? 0.2 : 0.05}
-              emissive={["#ff0066", "#00ff66", "#6600ff", "#ffff00", "#ff6600", "#00ffff"][i % 6]}
-              emissiveIntensity={0.1}
+              opacity={lightShow ? 0.3 : 0.1}
+              emissive={["#ff0066", "#00ff66", "#6600ff", "#ffff00", "#ff6600", "#00ffff", "#ff3366", "#66ff33"][i]}
+              emissiveIntensity={lightShow ? 0.5 : 0.2}
             />
           </mesh>
         </group>
@@ -89,14 +98,21 @@ function MainStage() {
         <meshStandardMaterial color="#333" metalness={0.5} roughness={0.3} />
       </mesh>
 
-      {/* Festival Title */}
+      {/* Festival Title - ENHANCED 3D TEXT */}
       <Float speed={0.5} rotationIntensity={0.1} floatIntensity={0.3}>
-        <Text3D font="/fonts/Inter_Bold.json" size={1.2} height={0.2} position={[0, 8, 2]} rotation={[0, 0, 0]}>
+        <Text3D
+          font="https://threejs.org/examples/fonts/helvetiker_regular.typeface.json"
+          size={2}
+          height={0.3}
+          position={[-8, 8, 2]}
+          rotation={[0, 0, 0]}
+          curveSegments={32}
+        >
           FESTIVAL HUB
           <meshStandardMaterial
             color="#ffffff"
-            emissive="#ff6b6b"
-            emissiveIntensity={0.2}
+            emissive={lightShow ? "#ff6b6b" : "#4ecdc4"}
+            emissiveIntensity={lightShow ? 0.8 : 0.4}
             metalness={0.8}
             roughness={0.1}
           />
@@ -107,6 +123,10 @@ function MainStage() {
 }
 
 function FestivalTents() {
+  useEffect(() => {
+    console.log(THREE)
+  }, [])
+
   return (
     <>
       {/* Left side tents */}
@@ -154,31 +174,32 @@ function FestivalTents() {
   )
 }
 
-function FestivalFlags() {
-  return (
-    <>
-      {[...Array(15)].map((_, i) => (
-        <Float key={i} speed={1 + i * 0.1} rotationIntensity={0.2} floatIntensity={0.5}>
-          <group position={[(Math.random() - 0.5) * 50, 8 + Math.random() * 4, (Math.random() - 0.5) * 40]}>
-            <mesh>
-              <cylinderGeometry args={[0.05, 0.05, 8]} />
-              <meshStandardMaterial color="#654321" />
-            </mesh>
-            <mesh position={[1, 2, 0]}>
-              <planeGeometry args={[2, 1.2]} />
-              <meshStandardMaterial
-                color={["#ff6b6b", "#4ecdc4", "#45b7d1", "#96ceb4", "#feca57", "#ff9ff3", "#a8e6cf"][i % 7]}
-                side={THREE.DoubleSide}
-                transparent
-                opacity={0.8}
-              />
-            </mesh>
-          </group>
-        </Float>
-      ))}
-    </>
-  )
-}
+ //! Not needed 
+// function FestivalFlags() {
+//   return (
+//     <>
+//       {[...Array(15)].map((_, i) => (
+//         <Float key={i} speed={1 + i * 0.1} rotationIntensity={0.2} floatIntensity={0.5}>
+//           <group position={[(Math.random() - 0.5) * 50, 8 + Math.random() * 4, (Math.random() - 0.5) * 40]}>
+//             <mesh>
+//               <cylinderGeometry args={[0.05, 0.05, 8]} />
+//               <meshStandardMaterial color="#654321" />
+//             </mesh>
+//             <mesh position={[1, 2, 0]}>
+//               <planeGeometry args={[2, 1.2]} />
+//               <meshStandardMaterial
+//                 color={["#ff6b6b", "#4ecdc4", "#45b7d1", "#96ceb4", "#feca57", "#ff9ff3", "#a8e6cf"][i % 7]}
+//                 side={THREE.DoubleSide}
+//                 transparent
+//                 opacity={0.8}
+//               />
+//             </mesh>
+//           </group>
+//         </Float>
+//       ))}
+//     </>
+//   )
+// }
 
 function CrowdSimulation() {
   return (
@@ -204,30 +225,62 @@ function FerrisWheel() {
 
   useFrame((state) => {
     if (wheelRef.current) {
-      wheelRef.current.rotation.z += 0.005
+      wheelRef.current.rotation.z += 0.008
     }
   })
 
   return (
     <group ref={wheelRef} position={[25, 8, -25]}>
+      {/* Main wheel structure */}
       <mesh>
-        <torusGeometry args={[6, 0.3, 16, 100]} />
-        <meshStandardMaterial color="#ff6b6b" metalness={0.8} roughness={0.2} />
+        <torusGeometry args={[6, 0.4, 16, 100]} />
+        <meshStandardMaterial 
+          color="#ff6b6b" 
+          metalness={0.8} 
+          roughness={0.2} 
+          emissive="#ff3333"
+          emissiveIntensity={0.3}
+        />
       </mesh>
 
+      {/* Support spokes */}
+      {[...Array(8)].map((_, i) => (
+        <mesh key={`spoke-${i}`} position={[0, 0, 0]} rotation={[0, 0, (i / 8) * Math.PI * 2]}>
+          <boxGeometry args={[0.2, 12, 0.2]} />
+          <meshStandardMaterial color="#ff6b6b" metalness={0.8} />
+        </mesh>
+      ))}
+
+      {/* Passenger gondolas */}
       {[...Array(8)].map((_, i) => (
         <group key={i} position={[Math.cos((i / 8) * Math.PI * 2) * 6, Math.sin((i / 8) * Math.PI * 2) * 6, 0]}>
           <mesh>
-            <boxGeometry args={[1, 1.5, 1]} />
-            <meshStandardMaterial color="#4ecdc4" transparent opacity={0.8} />
+            <boxGeometry args={[1.2, 1.8, 1.2]} />
+            <meshStandardMaterial 
+              color="#4ecdc4" 
+              transparent 
+              opacity={0.9}
+              emissive="#00aaaa"
+              emissiveIntensity={0.2}
+            />
+          </mesh>
+          {/* Gondola windows */}
+          <mesh position={[0, 0, 0.65]}>
+            <planeGeometry args={[0.8, 1.2]} />
+            <meshStandardMaterial color="#87ceeb" transparent opacity={0.7} />
           </mesh>
         </group>
       ))}
 
-      {[...Array(16)].map((_, i) => (
-        <mesh key={i} position={[Math.cos((i / 16) * Math.PI * 2) * 6.5, Math.sin((i / 16) * Math.PI * 2) * 6.5, 0]}>
-          <sphereGeometry args={[0.1]} />
-          <meshStandardMaterial color="#ffff00" emissive="#ffff00" emissiveIntensity={0.5} />
+      {/* Decorative lights */}
+      {[...Array(24)].map((_, i) => (
+        <mesh key={i} position={[Math.cos((i / 24) * Math.PI * 2) * 6.5, Math.sin((i / 24) * Math.PI * 2) * 6.5, 0]}>
+          <sphereGeometry args={[0.15]} />
+          <meshStandardMaterial 
+            color="#ffff00" 
+            emissive="#ffff00" 
+            emissiveIntensity={0.8 + Math.sin(i + Date.now() * 0.01) * 0.3} 
+          />
         </mesh>
       ))}
     </group>
@@ -239,30 +292,62 @@ function LeftFerrisWheel() {
 
   useFrame((state) => {
     if (wheelRef.current) {
-      wheelRef.current.rotation.z -= 0.004 // Rotate in opposite direction
+      wheelRef.current.rotation.z -= 0.006 // Rotate in opposite direction
     }
   })
 
   return (
     <group ref={wheelRef} position={[-25, 8, -25]}>
+      {/* Main wheel structure */}
       <mesh>
-        <torusGeometry args={[6, 0.3, 16, 100]} />
-        <meshStandardMaterial color="#4ecdc4" metalness={0.8} roughness={0.2} />
+        <torusGeometry args={[6, 0.4, 16, 100]} />
+        <meshStandardMaterial 
+          color="#4ecdc4" 
+          metalness={0.8} 
+          roughness={0.2} 
+          emissive="#00cccc"
+          emissiveIntensity={0.3}
+        />
       </mesh>
 
+      {/* Support spokes */}
+      {[...Array(8)].map((_, i) => (
+        <mesh key={`spoke-${i}`} position={[0, 0, 0]} rotation={[0, 0, (i / 8) * Math.PI * 2]}>
+          <boxGeometry args={[0.2, 12, 0.2]} />
+          <meshStandardMaterial color="#4ecdc4" metalness={0.8} />
+        </mesh>
+      ))}
+
+      {/* Passenger gondolas */}
       {[...Array(8)].map((_, i) => (
         <group key={i} position={[Math.cos((i / 8) * Math.PI * 2) * 6, Math.sin((i / 8) * Math.PI * 2) * 6, 0]}>
           <mesh>
-            <boxGeometry args={[1, 1.5, 1]} />
-            <meshStandardMaterial color="#ff6b6b" transparent opacity={0.8} />
+            <boxGeometry args={[1.2, 1.8, 1.2]} />
+            <meshStandardMaterial 
+              color="#ff6b6b" 
+              transparent 
+              opacity={0.9}
+              emissive="#ff3333"
+              emissiveIntensity={0.2}
+            />
+          </mesh>
+          {/* Gondola windows */}
+          <mesh position={[0, 0, 0.65]}>
+            <planeGeometry args={[0.8, 1.2]} />
+            <meshStandardMaterial color="#87ceeb" transparent opacity={0.7} />
           </mesh>
         </group>
       ))}
 
-      {[...Array(16)].map((_, i) => (
-        <mesh key={i} position={[Math.cos((i / 16) * Math.PI * 2) * 6.5, Math.sin((i / 16) * Math.PI * 2) * 6.5, 0]}>
-          <sphereGeometry args={[0.1]} />
-          <meshStandardMaterial color="#ffff00" emissive="#ffff00" emissiveIntensity={0.5} />
+      {/* Decorative lights */}
+      {[...Array(24)].map((_, i) => (
+        <mesh key={i} position={[Math.cos((i / 24) * Math.PI * 2) * 6.5, Math.sin((i / 24) * Math.PI * 2) * 6.5, 0]}>
+          <sphereGeometry args={[0.15]} />
+          <meshStandardMaterial 
+            color="#00ffff" 
+            emissive="#00ffff" 
+            emissiveIntensity={0.8 + Math.sin(i + Date.now() * 0.008) * 0.3} 
+          />
         </mesh>
       ))}
     </group>
@@ -312,7 +397,7 @@ function FestivalCore() {
     <group>
       <MainStage />
       <FestivalTents />
-      <FestivalFlags />
+      {/* <FestivalFlags /> */}
       <CrowdSimulation />
       <FerrisWheel />
       <LeftFerrisWheel />
@@ -335,9 +420,11 @@ function FestivalCore() {
         <meshStandardMaterial color="#5a4a3a" />
       </mesh>
 
-      <Sparkles count={80} scale={[50, 18, 35]} size={2} speed={0.3} color="#ffffff" opacity={0.4} />
-      <Sparkles count={30} scale={[35, 12, 20]} size={3} speed={0.15} color="#ff6b6b" opacity={0.3} />
-      <Sparkles count={25} scale={[25, 8, 15]} size={1.5} speed={0.5} color="#feca57" opacity={0.5} />
+      {/* ENHANCED PARTICLE EFFECTS */}
+      <Sparkles count={120} scale={[50, 18, 35]} size={3} speed={0.4} color="#ffffff" opacity={0.5} />
+      <Sparkles count={60} scale={[35, 12, 20]} size={4} speed={0.2} color="#ff6b6b" opacity={0.4} />
+      <Sparkles count={40} scale={[25, 8, 15]} size={2} speed={0.6} color="#feca57" opacity={0.6} />
+      <Sparkles count={30} scale={[20, 10, 20]} size={1.5} speed={0.8} color="#4ecdc4" opacity={0.5} />
 
       {/* Placeholder for hover effect */}
       {/* {isHovered && (
@@ -379,21 +466,19 @@ export default function FestivalPortal() {
   return (
     <div className="w-full h-full">
       <Canvas camera={{ position: [0, 6, 15], fov: 75 }} gl={{ antialias: true, alpha: true }} shadows>
-        <ambientLight intensity={0.5} />
+        {/* SIMPLIFIED LIGHTING to avoid shader errors */}
+        <ambientLight intensity={0.6} />
         <directionalLight
           position={[10, 20, 10]}
-          intensity={1.2}
+          intensity={1.5}
           castShadow
-          shadow-mapSize-width={2048}
-          shadow-mapSize-height={2048}
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
         />
-        <pointLight position={[0, 15, 0]} intensity={1} color="#ffffff" />
-        <pointLight position={[-15, 10, 5]} intensity={0.7} color="#ff6b6b" />
-        <pointLight position={[15, 10, 5]} intensity={0.7} color="#4ecdc4" />
+        <pointLight position={[0, 15, 0]} intensity={1.2} color="#ffffff" />
 
         <FestivalCore />
 
-        <Environment preset="sunset" />
         <OrbitControls
           enablePan={false}
           enableZoom={true}
