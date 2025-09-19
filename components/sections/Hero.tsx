@@ -1,7 +1,7 @@
 "use client"
 import { ChevronDown } from "lucide-react"
 import GlassNavbar from "@/components/glass/GlassNavbar"
-import FestivalPortal from "@/components/3d/FestivalPortal"
+// import FestivalPortal from "@/components/3d/FestivalPortal"
 
 export default function Hero() {
   const scrollToNext = () => {
@@ -54,8 +54,16 @@ export default function Hero() {
       </div>
 
       <div className="relative z-20 w-full h-full flex items-center justify-center my-16">
-        <div className="w-full h-[calc(100vh-8rem)] max-h-[800px]">
-          <FestivalPortal />
+        <div className="w-full h-[calc(100vh-8rem)] max-h-[800px] flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-64 h-64 mx-auto mb-8 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-cyan-500 animate-pulse flex items-center justify-center">
+              <div className="text-6xl">🎪</div>
+            </div>
+            <h1 className="text-6xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-4">
+              Aurora Fest
+            </h1>
+            <p className="text-xl text-gray-300">Experience the Magic</p>
+          </div>
         </div>
       </div>
 

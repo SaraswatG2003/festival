@@ -8,6 +8,7 @@ interface GlassCardProps {
   hover?: boolean
 }
 
+export { GlassCard }
 export default function GlassCard({ children, className, variant = "card", hover = true }: GlassCardProps) {
   const baseClasses = {
     primary: "glass-primary",

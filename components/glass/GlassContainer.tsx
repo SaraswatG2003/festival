@@ -7,7 +7,7 @@ interface GlassContainerProps {
   variant?: "primary" | "secondary"
 }
 
-export default function GlassContainer({ children, className, variant = "primary" }: GlassContainerProps) {
+const GlassContainer = ({ children, className, variant = "primary" }: GlassContainerProps) => {
   const variants = {
     primary: "glass-primary",
     secondary: "glass-secondary",
@@ -15,3 +15,6 @@ export default function GlassContainer({ children, className, variant = "primary
 
   return <div className={cn(variants[variant], "p-6", className)}>{children}</div>
 }
+
+export { GlassContainer }
+export default GlassContainer
