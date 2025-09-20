@@ -54,7 +54,7 @@ export default function About() {
   }
 
   return (
-    <section ref={ref} className="relative py-32 px-4 overflow-hidden">
+    <section id="about" ref={ref} className="relative py-32 px-4 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900/50 to-black" />
       <div className="absolute inset-0 dotted-pattern opacity-30" />
 

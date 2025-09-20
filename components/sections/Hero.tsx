@@ -4,8 +4,10 @@ import GlassNavbar from "@/components/glass/GlassNavbar"
 import FestivalPortal from "@/components/3d/FestivalPortal"
 
 export default function Hero() {
+  // Cannot use simple scrolling 
   const scrollToNext = () => {
     const nextSection = document.querySelector("#festival-stats")
+    // native dom access 
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: "smooth" })
     }
