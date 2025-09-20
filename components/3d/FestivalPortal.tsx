@@ -12,7 +12,6 @@ function MainStage() {
 
   useFrame((state) => {
     if (stageRef.current) {
-      // Gentle stage rotation
       stageRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.2) * 0.1
     }
     setLightShow(Math.sin(state.clock.elapsedTime * 2) > 0)
@@ -20,7 +19,6 @@ function MainStage() {
 
   return (
     <group ref={stageRef} position={[0, 0, -15]}>
-      {/* Main Stage Platform - ENHANCED */}
       <mesh position={[0, -1, 0]}>
         <boxGeometry args={[12, 0.8, 8]} />
         <meshStandardMaterial 
@@ -32,7 +30,6 @@ function MainStage() {
         />
       </mesh>
 
-      {/* Stage Backdrop - ENHANCED */}
       <mesh position={[0, 3, -4]}>
         <boxGeometry args={[14, 8, 0.5]} />
         <meshStandardMaterial 
@@ -42,7 +39,6 @@ function MainStage() {
         />
       </mesh>
 
-      {/* LED Screen - ENHANCED */}
       <mesh position={[0, 3, -3.8]}>
         <boxGeometry args={[10, 6, 0.1]} />
         <meshStandardMaterial 
@@ -52,14 +48,13 @@ function MainStage() {
         />
       </mesh>
 
-      {/* Stage Lights - SIMPLIFIED to avoid shader errors */}
       {[...Array(8)].map((_, i) => (
         <group key={i} position={[(i - 3.5) * 2, 6 + Math.sin(i) * 0.5, -2 + Math.cos(i) * 0.3]}>
           <mesh>
             <cylinderGeometry args={[0.3, 0.4, 1]} />
             <meshStandardMaterial color="#333" metalness={0.8} roughness={0.2} />
           </mesh>
-          {/* Light beam effect without point lights */}
+          
           <mesh position={[0, -2, 0]} rotation={[Math.PI / 2, 0, 0]}>
             <coneGeometry args={[2, 4, 8]} />
             <meshStandardMaterial
@@ -73,7 +68,6 @@ function MainStage() {
         </group>
       ))}
 
-      {/* Speakers */}
       <mesh position={[-7, 1, 2]}>
         <boxGeometry args={[1.5, 4, 2]} />
         <meshStandardMaterial color="#1a1a1a" />
@@ -92,13 +86,13 @@ function MainStage() {
         <meshStandardMaterial color="#1a1a1a" />
       </mesh>
 
-      {/* DJ Booth */}
+    
       <mesh position={[0, 0.5, -1]}>
         <boxGeometry args={[4, 1.5, 2]} />
         <meshStandardMaterial color="#333" metalness={0.5} roughness={0.3} />
       </mesh>
 
-      {/* Festival Title - ENHANCED 3D TEXT */}
+  
       <Float speed={0.5} rotationIntensity={0.1} floatIntensity={0.3}>
         <Text3D
           font="https://threejs.org/examples/fonts/helvetiker_regular.typeface.json"
@@ -129,7 +123,7 @@ function FestivalTents() {
 
   return (
     <>
-      {/* Left side tents */}
+      
       {[...Array(4)].map((_, i) => (
         <group key={`left-${i}`} position={[-12 - i * 3, 0, -5 + i * 4]}>
           <mesh position={[0, 1.5, 0]}>
@@ -143,7 +137,7 @@ function FestivalTents() {
         </group>
       ))}
 
-      {/* Right side tents */}
+    
       {[...Array(4)].map((_, i) => (
         <group key={`right-${i}`} position={[12 + i * 3, 0, -5 + i * 4]}>
           <mesh position={[0, 1.5, 0]}>
@@ -157,7 +151,7 @@ function FestivalTents() {
         </group>
       ))}
 
-      {/* Front area tents (smaller and further apart) */}
+      
       {[...Array(6)].map((_, i) => (
         <group key={`front-${i}`} position={[(i - 2.5) * 6, 0, 8]}>
           <mesh position={[0, 1.2, 0]}>
@@ -222,7 +216,6 @@ function CrowdSimulation() {
 
 function FerrisWheel() {
   const wheelRef = useRef<Group>(null)
-
   useFrame((state) => {
     if (wheelRef.current) {
       wheelRef.current.rotation.z += 0.008
@@ -243,7 +236,7 @@ function FerrisWheel() {
         />
       </mesh>
 
-      {/* Support spokes */}
+
       {[...Array(8)].map((_, i) => (
         <mesh key={`spoke-${i}`} position={[0, 0, 0]} rotation={[0, 0, (i / 8) * Math.PI * 2]}>
           <boxGeometry args={[0.2, 12, 0.2]} />
@@ -251,7 +244,6 @@ function FerrisWheel() {
         </mesh>
       ))}
 
-      {/* Passenger gondolas */}
       {[...Array(8)].map((_, i) => (
         <group key={i} position={[Math.cos((i / 8) * Math.PI * 2) * 6, Math.sin((i / 8) * Math.PI * 2) * 6, 0]}>
           <mesh>
@@ -264,7 +256,7 @@ function FerrisWheel() {
               emissiveIntensity={0.2}
             />
           </mesh>
-          {/* Gondola windows */}
+        
           <mesh position={[0, 0, 0.65]}>
             <planeGeometry args={[0.8, 1.2]} />
             <meshStandardMaterial color="#87ceeb" transparent opacity={0.7} />
@@ -272,7 +264,7 @@ function FerrisWheel() {
         </group>
       ))}
 
-      {/* Decorative lights */}
+      
       {[...Array(24)].map((_, i) => (
         <mesh key={i} position={[Math.cos((i / 24) * Math.PI * 2) * 6.5, Math.sin((i / 24) * Math.PI * 2) * 6.5, 0]}>
           <sphereGeometry args={[0.15]} />
@@ -298,7 +290,7 @@ function LeftFerrisWheel() {
 
   return (
     <group ref={wheelRef} position={[-25, 8, -25]}>
-      {/* Main wheel structure */}
+      
       <mesh>
         <torusGeometry args={[6, 0.4, 16, 100]} />
         <meshStandardMaterial 
@@ -310,7 +302,7 @@ function LeftFerrisWheel() {
         />
       </mesh>
 
-      {/* Support spokes */}
+     
       {[...Array(8)].map((_, i) => (
         <mesh key={`spoke-${i}`} position={[0, 0, 0]} rotation={[0, 0, (i / 8) * Math.PI * 2]}>
           <boxGeometry args={[0.2, 12, 0.2]} />
@@ -318,7 +310,7 @@ function LeftFerrisWheel() {
         </mesh>
       ))}
 
-      {/* Passenger gondolas */}
+      
       {[...Array(8)].map((_, i) => (
         <group key={i} position={[Math.cos((i / 8) * Math.PI * 2) * 6, Math.sin((i / 8) * Math.PI * 2) * 6, 0]}>
           <mesh>
@@ -331,7 +323,7 @@ function LeftFerrisWheel() {
               emissiveIntensity={0.2}
             />
           </mesh>
-          {/* Gondola windows */}
+          
           <mesh position={[0, 0, 0.65]}>
             <planeGeometry args={[0.8, 1.2]} />
             <meshStandardMaterial color="#87ceeb" transparent opacity={0.7} />
@@ -339,7 +331,7 @@ function LeftFerrisWheel() {
         </group>
       ))}
 
-      {/* Decorative lights */}
+      
       {[...Array(24)].map((_, i) => (
         <mesh key={i} position={[Math.cos((i / 24) * Math.PI * 2) * 6.5, Math.sin((i / 24) * Math.PI * 2) * 6.5, 0]}>
           <sphereGeometry args={[0.15]} />
@@ -397,7 +389,6 @@ function FestivalCore() {
     <group>
       <MainStage />
       <FestivalTents />
-      {/* <FestivalFlags /> */}
       <CrowdSimulation />
       <FerrisWheel />
       <LeftFerrisWheel />
@@ -408,39 +399,23 @@ function FestivalCore() {
         <meshStandardMaterial color="#2a1f15" roughness={0.9} transparent opacity={0.25} />
       </mesh>
 
-      {/* Main pathway to stage */}
+      
       <mesh position={[0, -1.9, -5]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[8, 20]} />
         <meshStandardMaterial color="#5a4a3a" />
       </mesh>
 
-      {/* Cross pathways */}
+    
       <mesh position={[0, -1.9, 5]} rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
         <planeGeometry args={[6, 25]} />
         <meshStandardMaterial color="#5a4a3a" />
       </mesh>
 
-      {/* ENHANCED PARTICLE EFFECTS */}
+      
       <Sparkles count={120} scale={[50, 18, 35]} size={3} speed={0.4} color="#ffffff" opacity={0.5} />
       <Sparkles count={60} scale={[35, 12, 20]} size={4} speed={0.2} color="#ff6b6b" opacity={0.4} />
       <Sparkles count={40} scale={[25, 8, 15]} size={2} speed={0.6} color="#feca57" opacity={0.6} />
       <Sparkles count={30} scale={[20, 10, 20]} size={1.5} speed={0.8} color="#4ecdc4" opacity={0.5} />
-
-      {/* Placeholder for hover effect */}
-      {/* {isHovered && (
-        <Html position={[0, 12, 0]} center>
-          <div className="glass-card p-6 text-white text-center pointer-events-none border border-white/20">
-            <p className="text-xl font-bold mb-2 text-white">🎪 Festival Grounds</p>
-            <p className="text-sm opacity-90 mb-1">Experience the magic • Explore the venue</p>
-            <p className="text-xs opacity-70 mt-2">Where music, food, and memories come alive</p>
-            <div className="mt-3 flex justify-center space-x-2">
-              <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse delay-100"></div>
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse delay-200"></div>
-            </div>
-          </div>
-        </Html>
-      )} */}
     </group>
   )
 }
@@ -466,7 +441,7 @@ export default function FestivalPortal() {
   return (
     <div className="w-full h-full">
       <Canvas camera={{ position: [0, 6, 15], fov: 75 }} gl={{ antialias: true, alpha: true }} shadows>
-        {/* SIMPLIFIED LIGHTING to avoid shader errors */}
+        
         <ambientLight intensity={0.6} />
         <directionalLight
           position={[10, 20, 10]}

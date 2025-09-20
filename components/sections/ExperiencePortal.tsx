@@ -242,7 +242,7 @@ export default function ExperiencePortal() {
         </div>
 
         {/* Festival Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+        <div id="festival-stats" className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
