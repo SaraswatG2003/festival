@@ -5,6 +5,7 @@ import FestivalPortal from "@/components/3d/FestivalPortal"
 
 export default function Hero() {
   // Cannot use simple scrolling 
+  // Not needed now
   const scrollToNext = () => {
     const nextSection = document.querySelector("#festival-stats")
     // native dom access 
@@ -48,15 +49,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30">
-        <button
-          onClick={scrollToNext}
-          className="animate-bounce text-white/60 hover:text-white transition-colors duration-300 glass-card p-4 rounded-full hover:scale-110"
-        >
-          <ChevronDown className="w-6 h-6" />
-        </button>
-      </div>
 
       <div className="absolute top-20 left-10 animate-float z-10">
         <div className="w-8 h-8 rounded-full bg-white/20 animate-pulse shadow-lg shadow-white/10" />
